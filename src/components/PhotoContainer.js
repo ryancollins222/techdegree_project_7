@@ -1,23 +1,29 @@
 import React, {Component} from 'react';
-import {Route} from 'react-router-dom';
-
-// app components
 import NotFound from './NotFound';
 import Photo from './Photo';
 
 class PhotoContainer extends Component {
   render() {
+    let results = this.props.results;
     return (
-      <div class="photo-container">
-        <h2>Results</h2>
+      <div className="photo-container">
+        {results.length > 0 && 
+          <h2>Results</h2>
+        }
         <ul>
-          <Photo />
-          {/* <!-- Not Found --> */}
-          <Route component={NotFound}/>
+          {results.map(photo => 
+            <Photo 
+              {...photo}
+              key={photo.id}
+            />
+          )}
+          {results.length === 0 &&
+            <NotFound />
+          }
         </ul>
       </div>
     );
-  };
+  }
 }
 
 export default PhotoContainer;
